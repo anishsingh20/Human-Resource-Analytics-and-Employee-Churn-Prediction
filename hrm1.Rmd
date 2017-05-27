@@ -170,3 +170,21 @@ ggplot(aes(x=number_project),data = hrm) +
 
 ```
 
+---
+
+## Analysis on Average Number of Hours a Employee works
+
+```{r}
+#Analysis of average monthly hours
+summary(average_montly_hours)
+#Somewhat Normally distributed
+
+ggplot(aes(x= average_montly_hours),data = hrm)+
+  geom_histogram(color='black',fill="yellow",bins = 30)
+
+
+cor.test(satisfaction_level,average_montly_hours)
+#No relation between both the variables -  as r is eqv to 0
+
+```
+

@@ -82,6 +82,7 @@ ggplot(aes(x=number_project),data = hrm) +
 #boxplot of number of projects vs  Average monthly hours at workplace of employees
 p3=ggplot(aes(x=number_project, y = average_montly_hours),data=hrm)+
   geom_boxplot()
+p3
 
 p4=p3+facet_wrap(~salary)
 p4
@@ -106,4 +107,19 @@ ggplot(aes(x=number_project),data = hrm) +
   ylab("Frequency") + 
   labs(title="Barplot of Number of projects faceted by Left")+  
   facet_wrap(~left)
+
+
+#Analysis of average monthly hours
+summary(average_montly_hours)
+#Somewhat Normally distributed
+
+ggplot(aes(x= average_montly_hours),data = hrm)+
+  geom_histogram(color='black',fill="yellow",bins = 30)
+
+
+cor.test(satisfaction_level,average_montly_hours)
+#No relation between both the variables
+
+
+
   
