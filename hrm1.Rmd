@@ -120,6 +120,53 @@ chisq.test(left,salary)
 ```
 ### X-squared value is high and p-value is less i.e results are significant.Both variables are related
 
+---
+
+## Analysis on number of Projects
 
 
+
+```{r}
+hrm$number_project<-factor(hrm$number_project)
+
+ggplot(aes(x=number_project),data = hrm) + 
+  geom_bar(color='black',fill='#234338') +
+  xlab("Number of Projects") + 
+  ylab("Frequency") + 
+  labs(title="Barplot of Number of projects")
+
+
+
+
+
+#boxplot of number of projects vs  Average monthly hours at workplace of employees
+p3=ggplot(aes(x=number_project, y = average_montly_hours),data=hrm)+
+  geom_boxplot()
+
+p4=p3+facet_wrap(~salary)
+p4
+
+p5=p3+facet_wrap(~left) + labs(title="Number projects Vs Avg monthly hours worked faceted by Left")
+p5
+
+
+#facetted by salary
+ggplot(aes(x=number_project),data = hrm) + 
+  geom_bar(color='black',fill='#834338') +
+  xlab("Number of Projects") + 
+  ylab("Frequency") + 
+  labs(title="Barplot of Number of projects faceted by Salary") +
+  facet_wrap(~salary)
+
+
+#faceted by If a employee left or not
+ggplot(aes(x=number_project),data = hrm) + 
+  geom_bar(color='black',fill='#547398') +
+  xlab("Number of Projects") + 
+  ylab("Frequency") + 
+  labs(title="Barplot of Number of projects faceted by Left")+  
+  facet_wrap(~left)
+  
+
+```
 
