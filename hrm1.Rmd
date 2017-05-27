@@ -1,0 +1,87 @@
+---
+title: "Human Resource Analytics"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+#### Loading The required packages
+```{r  , message=FALSE,warning=FALSE}
+library(ggplot2)
+library(dplyr)
+
+```
+
+
+```{r,message=FALSE,warning=FALSE}
+#loading the Dataset
+
+hrm<-read.csv('HR_comma_sep.csv')
+
+#Structure of the Dataset
+str(hrm)
+attach(hrm)
+
+#converting left variable to factor variable 
+hrm$left<-ifelse(left==1,'True','False')
+
+hrm$left<-factor(hrm$left,levels=c("True","False"))
+table(hrm$left)
+
+#Summary Statistics of the dataset
+summary(hrm)
+
+
+
+
+```
+
+
+---
+
+<h3>Satisfaction level statistics splitted by salary ranges</h3>
+```{r}
+
+by(hrm$satisfaction_level,hrm$salary,summary)
+
+#Histogram
+p1<-ggplot(aes(x=satisfaction_level),data=hrm) + 
+  geom_histogram(color="black",fill="red",bins = 30) +
+  labs(title="Satisfaction level Histogram",x='Satisfaction Level of Employees', y="Frequency")
+
+p1
+
+
+
+    
+#Satisfaction level histogram facetted by sallary classes
+p2 =  p1  + facet_wrap(~salary)
+p2
+
+```
+
+---
+
+<ul style="font-size:18px">
+<li> The disrtibution of satisfaction level for each class of Salary Ranges is almost same.</li>
+<li> The High salary employees have a little bit higher mean satisfaction level.</li>
+<li>
+Employees with High salary are less in number.
+</li>
+</ul>
+
+
+
+
+
+
