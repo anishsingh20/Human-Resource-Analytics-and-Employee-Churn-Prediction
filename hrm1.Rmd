@@ -188,3 +188,23 @@ cor.test(satisfaction_level,average_montly_hours)
 
 ```
 
+
+
+```{r}
+
+ggplot(aes(x = average_montly_hours),data =hrm ) + 
+  geom_histogram(color='black',fill='#443332',bins = 30) + 
+  facet_wrap(~left)
+
+by(average_montly_hours , hrm$left ,summary)
+
+ggplot(aes(y = average_montly_hours, x = hrm$left),data=hrm)+
+  geom_boxplot() + 
+  xlab("Employee left or not") + 
+  ylab("Average Montly hours worked")
+
+
+
+```
+
+## A thing to notice is that employee who left the company worked more hours than those who did not leave, hence it might be possible that they left bacause they were over pressurized by their peers or bosses or over worked or stressed with lots of work

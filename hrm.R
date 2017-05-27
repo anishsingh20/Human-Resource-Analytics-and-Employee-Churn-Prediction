@@ -120,6 +120,28 @@ ggplot(aes(x= average_montly_hours),data = hrm)+
 cor.test(satisfaction_level,average_montly_hours)
 #No relation between both the variables
 
+cor.test(time_spend_company,average_montly_hours)
+
+ggplot(aes(y = average_montly_hours, x = as.factor(time_spend_company)),data=hrm)+
+  geom_boxplot() + 
+  xlab("No of years a Employee has worked in The company") + 
+  ylab("Average Montly hours worked")
+
+
+ggplot(aes(x = average_montly_hours),data =hrm ) + 
+  geom_histogram(color='black',fill='#443332',bins = 30) + 
+  facet_wrap(~left)
+
+by(average_montly_hours , hrm$left ,summary)
+
+ggplot(aes(y = average_montly_hours, x = hrm$left),data=hrm)+
+  geom_boxplot() + 
+  xlab("Employee left or not") + 
+  ylab("Average Montly hours worked")
+
+# A thing to notice is that employee who left the company worked more hours than those
+# who did not leave.
+
 
 
   
