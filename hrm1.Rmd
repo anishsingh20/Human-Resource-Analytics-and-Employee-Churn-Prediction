@@ -1,8 +1,8 @@
 ---
 title: "Human Resource Analytics"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 
@@ -67,6 +67,9 @@ p1
 #Satisfaction level histogram facetted by sallary classes
 p2 =  p1  + facet_wrap(~salary)
 p2
+
+
+
 
 ```
 
