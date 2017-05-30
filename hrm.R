@@ -1,5 +1,6 @@
 library(ggplot2)
 library(dplyr)
+library(tidyr)
 
 hrm<-read.csv('HR_comma_sep.csv')
 
@@ -203,6 +204,17 @@ ggplot(aes(x = factor(time_spend_company)),data = hrm)+
 by(time_spend_company,sales,summary)
 
 
+
+ggplot(aes(x = sales,y = time_spend_company),data = hrm) + 
+  geom_boxplot() + 
+  coord_flip()
+
+
+
+
+#Analysis of Department of Work 
+
+
 ggplot(aes(x =sales),data = hrm ) +
   geom_bar()  +
   xlab('Department') + 
@@ -212,17 +224,61 @@ ggplot(aes(x =sales),data = hrm ) +
 #Management
 
 
+#Department vs sallary
+
+table(Dept = sales , Salary  = salary)
 
 
+ggplot(aes(x =sales),data = hrm ) +
+  geom_bar(aes(fill=salary))  +
+  xlab('Department') + 
+  ylab('Counts') +
+  coord_flip()
 
 
+ggplot(aes(x =sales),data = hrm ) +
+  geom_bar(aes(fill=salary))  +
+  xlab('Department') + 
+  ylab('Counts') +
+  labs(title = "Department and their count facetted by Salary ranges")+
+  facet_wrap(~salary) + 
+  coord_flip()
+
+chisq.test(sales,salary)
+#Department and Salary is dependent on each other . 
 
 
+#Department vs which employee left
+
+ggplot(aes(x = sales),data =hrm)  +
+  geom_bar(aes(fill=left))
+
+#finding proportions
+prop.table(table(Dept = sales , left = left))*100
 
 
+deptdf<-hrm %>% group_by(sales,left) %>% 
+      summarise(count=n())
+
+#making a data frame of Departments and the count of workers who left or not
+deptdf<-spread(deptdf,left,count)
+
+deptdf<-transform(deptdf,Perleft=(True/(True+False))*100 , PerWork=(False/(True+False))*100)
+deptdf
+
+chisq.test(sales , left)
+#Hence both Department and left variablesa are realted
 
 
-
-
+#Plot of Department vs Percentage of Employees who left
+ggplot(aes(x=sales, y = Perleft),data = deptdf) + 
+  geom_col(fill='#53ab85',color='#2f3f52') + 
+  coord_flip()+
+  xlab("Department") + 
+  ylab("Percentage of Employees who left") + 
+  labs(title="Plot of Department vs Percentage of Employee left")
+#highest percentage of employees belonged to HR dept then accounting
+# least for management dept who left
+  
 
   

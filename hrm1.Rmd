@@ -243,6 +243,7 @@ ggplot(aes(x = left , y = time_spend_company),data = hrm)+
 
 ### Time Spend at company vs Satisfaaction level
 ```{r}
+
 by(satisfaction_level,factor(time_spend_company),summary)
 
 cor.test(satisfaction_level,time_spend_company)
@@ -260,7 +261,7 @@ ggplot(aes(x=factor(time_spend_company),y=satisfaction_level),data=hrm)+
 
 #Time spend at compnay vs Promotion in last 5 years
 
-table(Promotion=promotion_last_5years,Time-Spend=factor(time_spend_company))
+table(Promotion=promotion_last_5years,Time_Spend=factor(time_spend_company))
 #Employees who have had promotion are very less
 
 
@@ -271,6 +272,95 @@ ggplot(aes(x = factor(time_spend_company)),data = hrm)+
 
 
 
+
+
+#Time spend vs Department of Work
+
+by(time_spend_company,sales,summary)
+
+
+ggplot(aes(x =sales),data = hrm ) +
+  geom_bar()  +
+  xlab('Department') + 
+  ylab('Counts') +
+  coord_flip() 
+#highest count is for Sales department then Technical  and least for 
+#Management
+
+ggplot(aes(x = sales,y = time_spend_company),data = hrm) + 
+  geom_boxplot() + 
+  coord_flip()
+
+
+
+
+
+
+
+
+
+```
+
+
+---
+
+
+
+## Analysis of Department of Work 
+
+```{r}
+
+ggplot(aes(x =sales),data = hrm ) +
+  geom_bar()  +
+  xlab('Department') + 
+  ylab('Counts') +
+  coord_flip() 
+#highest count is for Sales department then Technical  and least for 
+#Management
+
+
+#Department vs sallary
+
+table(Dept = sales , Salary  = salary)
+
+
+ggplot(aes(x =sales),data = hrm ) +
+  geom_bar(aes(fill=salary))  +
+  xlab('Department') + 
+  ylab('Counts') +
+  coord_flip()
+
+
+ggplot(aes(x =sales),data = hrm ) +
+  geom_bar()  +
+  xlab('Department') + 
+  ylab('Counts') +
+  labs(title = "Department and their count facetted by Salary ranges")+
+  facet_wrap(~salary) + 
+  coord_flip()
+
+chisq.test(sales,salary)
+#Department and Salary is dependent on each other . 
+
+
+
+
+#finding proportions
+prop.table(table(Dept = sales , left = left))*100
+
+as.data.frame(table(sales , left))->deptdf
+deptdf
+
+
+deptdf<-hrm %>% group_by(sales,left) %>% 
+      summarise(count=n())
+
+require(tidyr)
+#making a dat frame of Departments and the count of workers who left or not
+deptdf<-spread(deptdf,left,count)
+
+deptdf<-transform(deptdf,Perleft=(True/(True+False))*100 , PerWork=(False/(True+False))*100)
+deptdf
 
 
 
