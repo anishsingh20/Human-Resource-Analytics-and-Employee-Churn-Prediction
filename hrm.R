@@ -188,7 +188,7 @@ ggplot(aes(x=factor(time_spend_company),y=satisfaction_level),data=hrm)+
 
 #Time spend at compnay vs Promotion in last 5 years
 
-table(promotion_last_5years)
+table(Promotion=promotion_last_5years,Time_Spend=factor(time_spend_company))
 #Employees who have had promotion are very less
 
 
@@ -196,6 +196,23 @@ ggplot(aes(x = factor(time_spend_company)),data = hrm)+
   geom_bar()+
   facet_wrap(~promotion_last_5years) + 
   scale_y_continuous(limits=c(0,4000),breaks=seq(0,4000,500))
+
+
+#Time spend vs Department of Work
+
+by(time_spend_company,sales,summary)
+
+
+ggplot(aes(x =sales),data = hrm ) +
+  geom_bar()  +
+  xlab('Department') + 
+  ylab('Counts') +
+  coord_flip() 
+#highest count is for Sales department then Technical  and least for 
+#Management
+
+
+
 
 
 
