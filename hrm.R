@@ -163,9 +163,24 @@ ggplot(aes(x = factor(time_spend_company)),data = hrm) +
   labs(title = "Barplot of Time spend at Company faceted by Left")  +
   facet_wrap(~left)
 
-by(time_spend_company , left , summary)
+by(time_spend_company , hrm$left , summary)
 
-ggplot(aes(x = left , y = time_spend_company),data = hrm)+
+ggplot(aes(x = left , y
+           = time_spend_company),data = hrm)+
+  geom_boxplot()
+
+
+
+
+#Time spend vs Satisfaction level of employees as they worked
+
+by(satisfaction_level,factor(time_spend_company),summary)
+
+cor.test(satisfaction_level,time_spend_company)
+#both have a negetive correlation
+
+#plots vs Time spend and Satisfaction level
+ggplot(aes(x=factor(time_spend_company),y=satisfaction_level),data=hrm)+
   geom_boxplot()
 
 
