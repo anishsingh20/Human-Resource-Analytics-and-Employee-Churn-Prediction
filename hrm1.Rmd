@@ -241,3 +241,39 @@ ggplot(aes(x = left , y = time_spend_company),data = hrm)+
 
 ```
 
+### Time Spend at company vs Satisfaaction level
+```{r}
+by(satisfaction_level,factor(time_spend_company),summary)
+
+cor.test(satisfaction_level,time_spend_company)
+#both have a negetive correlation
+
+#plots vs Time spend and Satisfaction level
+ggplot(aes(x=factor(time_spend_company),y=satisfaction_level),data=hrm)+
+  geom_boxplot() + 
+  xlab("Time spend at company in years")+ 
+  ylab("Satisfaction level")
+
+
+
+
+
+#Time spend at compnay vs Promotion in last 5 years
+
+table(Promotion=promotion_last_5years,Time-Spend=factor(time_spend_company))
+#Employees who have had promotion are very less
+
+
+ggplot(aes(x = factor(time_spend_company)),data = hrm)+
+  geom_bar()+
+  facet_wrap(~promotion_last_5years) + 
+  scale_y_continuous(limits=c(0,4000),breaks=seq(0,4000,500))
+
+
+
+
+
+
+
+```
+

@@ -181,7 +181,30 @@ cor.test(satisfaction_level,time_spend_company)
 
 #plots vs Time spend and Satisfaction level
 ggplot(aes(x=factor(time_spend_company),y=satisfaction_level),data=hrm)+
-  geom_boxplot()
+  geom_boxplot() + 
+  xlab("Time spend at company in years")+ 
+  ylab("Satisfaction level")
+
+
+#Time spend at compnay vs Promotion in last 5 years
+
+table(promotion_last_5years)
+#Employees who have had promotion are very less
+
+
+ggplot(aes(x = factor(time_spend_company)),data = hrm)+
+  geom_bar()+
+  facet_wrap(~promotion_last_5years) + 
+  scale_y_continuous(limits=c(0,4000),breaks=seq(0,4000,500))
+
+
+
+
+
+
+
+
+
 
 
 
