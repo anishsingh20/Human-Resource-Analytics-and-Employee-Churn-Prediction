@@ -143,5 +143,31 @@ ggplot(aes(y = average_montly_hours, x = hrm$left),data=hrm)+
 # who did not leave.
 
 
+#Anslysis for variable Time spend at company
+
+table(hrm$time_spend_company)
+
+ggplot(aes(x = factor(time_spend_company)),data = hrm) + 
+  geom_bar(fill = 'purple',color='black') + 
+  xlab("Time spend at compnay in years") + 
+  ylab("Frequency")+
+  labs(title = "Barplot of Time spend at Company")
+
+
+#Time spend at company vs Left or not
+
+ggplot(aes(x = factor(time_spend_company)),data = hrm) + 
+  geom_bar(fill = 'grey',color='black') + 
+  xlab("Time spend at compnay in years") + 
+  ylab("Frequency")+
+  labs(title = "Barplot of Time spend at Company faceted by Left")  +
+  facet_wrap(~left)
+
+by(time_spend_company , left , summary)
+
+ggplot(aes(x = left , y = time_spend_company),data = hrm)+
+  geom_boxplot()
+
+
 
   
