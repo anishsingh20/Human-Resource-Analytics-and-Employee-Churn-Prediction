@@ -280,5 +280,27 @@ ggplot(aes(x=sales, y = Perleft),data = deptdf) +
 #highest percentage of employees belonged to HR dept then accounting
 # least for management dept who left
   
+#Plot of Department vs Percentage of People Working
+ggplot(aes(x=sales, y = PerWork),data = deptdf) + 
+  geom_col(fill='#b6a2bf',color='#2f3f52') + 
+  coord_flip()+
+  xlab("Department") + 
+  ylab("Percentage of Employees who Still Work") + 
+  labs(title="Plot of Department vs Percentage of Employees Working")
 
-  
+
+
+
+#Department vs Satisfaction level
+
+by(satisfaction_level,sales,summary)
+#highest mean satisfaction for R&D and Management Dept
+
+ggplot(aes(x = sales, y = satisfaction_level),data = hrm)+
+  geom_boxplot() + 
+  scale_y_sqrt()+
+  xlab('Department') + 
+  ylab('Satisfaction Level"') + 
+  coord_flip()
+#Highest Median Satisfaction for IT dept, R&D and , Management
+#Least Median Satifaction level for HR and Accounting
