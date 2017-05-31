@@ -363,7 +363,7 @@ accidentdf<-hrm %>% group_by(sales,Work_accident) %>%
 
 accidentdf<-spread(accidentdf,Work_accident,Count)
 
-accidentdf<-transform(accidentdf,TrueRate=(True/(True+False))*100,FasleRate=(False/(True+False))*100)
+accidentdf<-transform(accidentdf,TrueRate=(True/(True+False))*100,FalseRate=(False/(True+False))*100)
 
 #Plot of Departent vs Accidental Rate 
 ggplot(aes(x = sales,y = TrueRate),data = accidentdf) + 
@@ -373,5 +373,11 @@ ggplot(aes(x = sales,y = TrueRate),data = accidentdf) +
   coord_flip()
 #Hishest number of accidents in R and D department
 
+ggplot(aes(x = sales,y = FalseRate),data = accidentdf) + 
+  geom_col(color='black',fill="#d8b2d8") + 
+  xlab('Department') + 
+  ylab('No Accident Percentage') + 
+  coord_flip()
+#Maximum for HR department
 
 
