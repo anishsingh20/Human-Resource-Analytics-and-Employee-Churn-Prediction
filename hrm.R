@@ -267,7 +267,7 @@ deptdf<-transform(deptdf,Perleft=(True/(True+False))*100 , PerWork=(False/(True+
 deptdf
 
 chisq.test(sales , left)
-#Hence both Department and left variablesa are realted
+#Hence both Department and left variables are realted
 
 
 #Plot of Department vs Percentage of Employees who left
@@ -304,3 +304,43 @@ ggplot(aes(x = sales, y = satisfaction_level),data = hrm)+
   coord_flip()
 #Highest Median Satisfaction for IT dept, R&D and , Management
 #Least Median Satifaction level for HR and Accounting
+
+
+#Analysis of Department vs Time spend at company
+
+by(time_spend_company,sales,summary)
+
+#Maximum  Mean Time spent by Managaement Employees
+
+ggplot(aes(x = sales,y = time_spend_company),data = hrm) + 
+  geom_boxplot() +
+  xlab('Department') + 
+  ylab("Time Spend at Company") + 
+  coord_flip()
+
+
+ggplot(aes(x = time_spend_company),data = hrm) + 
+  geom_bar() +
+   xlab("Time Spend at Company splitted by Department") + 
+facet_wrap(~sales)
+#In every department there is very less count of Employees
+# working for over 5 years
+
+
+
+#Department vs Time average monthly hours
+
+by(average_montly_hours,sales , summary)
+
+
+#Highest average working time for IT and Technical departments
+
+ggplot(aes(x = sales , y = average_montly_hours),data =hrm) +
+  geom_boxplot() + 
+  xlab('Department of Work') + 
+  ylab('Average Monthly Hourse of Work') + 
+  coord_flip()
+
+#Highest Median working time of Management department
+
+
