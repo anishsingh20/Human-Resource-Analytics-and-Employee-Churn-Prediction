@@ -344,3 +344,34 @@ ggplot(aes(x = sales , y = average_montly_hours),data =hrm) +
 #Highest Median working time of Management department
 
 
+#Department vs Work Accident
+
+table(Work_accident)
+
+table(sales,Work_accident)
+
+ggplot(aes(x = sales),data = hrm) +
+  geom_bar(aes(fill=factor(Work_accident))) + 
+  coord_flip() + 
+  labs(x = "Department",y ="Frequency", fill="Work Accidents" )
+
+
+hrm$Work_accident<-factor(Work_accident,labels = c('False','True'))
+
+accidentdf<-hrm %>% group_by(sales,Work_accident) %>%
+  summarise(Count= n())
+
+accidentdf<-spread(accidentdf,Work_accident,Count)
+
+accidentdf<-transform(accidentdf,TrueRate=(True/(True+False))*100,FasleRate=(False/(True+False))*100)
+
+#Plot of Departent vs Accidental Rate 
+ggplot(aes(x = sales,y = TrueRate),data = accidentdf) + 
+  geom_col(color='black',fill="#b266b2") + 
+  xlab('Department') + 
+  ylab('Accident Percentage') + 
+  coord_flip()
+#Hishest number of accidents in R and D department
+
+
+
