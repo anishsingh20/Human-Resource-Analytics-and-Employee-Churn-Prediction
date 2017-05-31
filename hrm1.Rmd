@@ -485,6 +485,13 @@ ggplot(aes(x = sales,y = TrueRate),data = accidentdf) +
 
 
 
+ggplot(aes(x = sales,y = FalseRate),data = accidentdf) + 
+  geom_col(color='black',fill="#d8b2d8") + 
+  xlab('Department') + 
+  ylab('No Accident Percentage') + 
+  coord_flip()
+#Maximum for HR department
+
 
 
 
