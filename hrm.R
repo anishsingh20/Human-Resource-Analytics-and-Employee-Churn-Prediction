@@ -409,10 +409,21 @@ promotiondf<-hrm %>% group_by(sales,promotion_last_5years) %>%
 promotiondf<-promotiondf %>% spread(promotion_last_5years,Count)
 
 #changing the names
-names(promotiondf)<-c("Department","No Promotion","Promotion")
+names(promotiondf)<-c("Department","Nopromotion","Promotion")
 
 #replacing NA valuw with 0
 promotiondf[is.na(promotiondf)]<-0
+
+promotiondf<-promotiondf %>% mutate(PromotionPer=(Promotion/(Promotion+Nopromotion))*100,
+                                    NopromotionPer = (Nopromotion/(Promotion + Nopromotion))*100)
+#Most number of Promotions done in Management and Marketing Departments
+#Least in IT , Technical and Product Manager
+
+#Plotting 
+#ggplot(aes(x = Department, y = ))
+
+
+
 
 
 

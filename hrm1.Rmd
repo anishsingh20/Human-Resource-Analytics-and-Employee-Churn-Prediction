@@ -19,6 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r  , message=FALSE,warning=FALSE}
 library(ggplot2)
 library(dplyr)
+library(tidyr)
 
 ```
 
@@ -355,8 +356,7 @@ deptdf
 deptdf<-hrm %>% group_by(sales,left) %>% 
       summarise(count=n())
 
-require(tidyr)
-#making a dat frame of Departments and the count of workers who left or not
+#making a data frame of Departments and the count of workers who left or not
 deptdf<-spread(deptdf,left,count)
 
 deptdf<-transform(deptdf,Perleft=(True/(True+False))*100 , PerWork=(False/(True+False))*100)
@@ -473,7 +473,7 @@ accidentdf<-hrm %>% group_by(sales,Work_accident) %>%
 
 accidentdf<-spread(accidentdf,Work_accident,Count)
 
-accidentdf<-transform(accidentdf,TrueRate=(True/(True+False))*100,FasleRate=(False/(True+False))*100)
+accidentdf<-transform(accidentdf,TrueRate=(True/(True+False))*100,FalseRate=(False/(True+False))*100)
 
 #Plot of Departent vs Accidental Rate 
 ggplot(aes(x = sales,y = TrueRate),data = accidentdf) + 
@@ -481,7 +481,7 @@ ggplot(aes(x = sales,y = TrueRate),data = accidentdf) +
   xlab('Department') + 
   ylab('Accident Percentage') + 
   coord_flip()
-#Hishest number of accidents in R and D department
+#Highest number of accidents in R and D department
 
 
 
@@ -504,7 +504,8 @@ ggplot(aes(x = sales, y =factor(number_project)),data = hrm) +
   geom_count() +
   xlab("Department") + 
   ylab("Number of projects") + 
-  labs(title = "Plot of Department vs Number of projects and their count ")
+  labs(title = "Plot of Department vs Number of projects and their count ") + 
+  coord_flip()
 
 
 
@@ -514,22 +515,25 @@ ggplot(aes(x = sales, y =factor(number_project)),data = hrm) +
 
 table(sales , hrm$promotion_last_5years)
 
-#TRansforming Promotion Column to Factor with True and False values
+#Transforming Promotion Column to Factor with True and False values
 hrm$promotion_last_5years<-factor(promotion_last_5years,labels=c('False',"True"))
 
 #Generating a promotions Data frame
 promotiondf<-hrm %>% group_by(sales,promotion_last_5years) %>%
   summarise(Count = n())
 
-#Sprading the data'
+#Spreading the data
 promotiondf<-promotiondf %>% spread(promotion_last_5years,Count)
 
 #changing the names
-names(promotiondf)<-c("Department","No Promotion","Promotion")
+names(promotiondf)<-c("Department","Nopromotion","Promotion")
 
 #replacing NA valuw with 0
 promotiondf[is.na(promotiondf)]<-0
 
-
+promotiondf<-promotiondf %>% transform(PerPromotion=(Promotion/(Promotion+Nopromotion))*100,
+                                    PerNopromotion = (Nopromotion/(Promotion + Nopromotion))*100)
+#Most number of Promotions done in Management and Marketing Departments
+#Least in IT , Technical and Product Manager
 ```
 
