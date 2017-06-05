@@ -9,9 +9,9 @@ str(hrm)
 attach(hrm)
 
 #converting left variable to factor variable 
-hrm$left<-ifelse(left==1,'True','False')
+hrm$left<-ifelse(hrm$left==1,'True','False')
 
-hrm$left<-factor(hrm$left,levels=c("True","False"))
+hrm$left<-factor(hrm$left,labels=c("True","False"))
 table(hrm$left)
 
 #Summary Statistics of the dataset
@@ -266,7 +266,7 @@ deptdf<-spread(deptdf,left,count)
 deptdf<-transform(deptdf,Perleft=(True/(True+False))*100 , PerWork=(False/(True+False))*100)
 deptdf
 
-chisq.test(sales , left)
+chisq.test(sales , hrm$left)
 #Hence both Department and left variables are realted
 
 
@@ -414,13 +414,19 @@ names(promotiondf)<-c("Department","Nopromotion","Promotion")
 #replacing NA valuw with 0
 promotiondf[is.na(promotiondf)]<-0
 
-promotiondf<-promotiondf %>% mutate(PromotionPer=(Promotion/(Promotion+Nopromotion))*100,
-                                    NopromotionPer = (Nopromotion/(Promotion + Nopromotion))*100)
+promotiondf<-promotiondf %>% transform(PerPromotion=(Promotion/(Promotion+Nopromotion))*100,
+                                    PerNopromotion = (Nopromotion/(Promotion + Nopromotion))*100)
+
 #Most number of Promotions done in Management and Marketing Departments
 #Least in IT , Technical and Product Manager
 
-#Plotting 
-#ggplot(aes(x = Department, y = ))
+#Plotting Department vs Promotion Percentage
+ggplot(aes(x =Department, y =PerPromotion ),data = promotiondf) + 
+  geom_col(color='black',fill = '#453322') + 
+  xlab("Department") + 
+  ylab("Percentage of employees Promoted in last 5 years") + 
+  coord_flip()
+#Highest in Management Department
 
 
 
