@@ -428,6 +428,15 @@ ggplot(aes(x =Department, y =PerPromotion ),data = promotiondf) +
   coord_flip()
 #Highest in Management Department
 
+#Plotting Department vs No Promotion Percentage
+ggplot(aes(x =Department, y =PerNopromotion ),data = promotiondf) + 
+  geom_col(color="white",fill = "#665443") + 
+  xlab("Department") + 
+  ylab("Percentage of employees Not Promoted in last 5 years") + 
+  coord_flip()
+#No promotion in IT and Product Management Dept
+
+  
 
 
 
