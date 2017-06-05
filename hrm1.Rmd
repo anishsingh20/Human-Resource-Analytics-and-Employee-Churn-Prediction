@@ -496,5 +496,19 @@ ggplot(aes(x = sales,y = FalseRate),data = accidentdf) +
 
 
 
+#Department vs number_projects made
+
+by(number_project,sales,summary)
+
+ggplot(aes(x = sales, y =factor(number_project)),data = hrm) +
+  geom_count() +
+  xlab("Department") + 
+  ylab("Number of projects") + 
+  labs(title = "Plot of Department vs Number of projects and their count ")
+
+
+
+
+
 ```
 
