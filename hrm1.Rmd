@@ -1,8 +1,9 @@
 ---
 title: "Human Resource Analytics"
 output:
-  html_document: default
+  word_document: default
   pdf_document: default
+  html_document: default
 ---
 
 
