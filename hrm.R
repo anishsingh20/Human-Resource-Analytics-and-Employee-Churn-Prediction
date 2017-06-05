@@ -394,6 +394,33 @@ ggplot(aes(x = sales, y =factor(number_project)),data = hrm) +
 
    
 
+#Department vs Promotion in last 5 years
+
+table(sales , hrm$promotion_last_5years)
+
+#TRansforming Promotion Column to Factor with True and False values
+hrm$promotion_last_5years<-factor(promotion_last_5years,labels=c('False',"True"))
+
+#Generating a promotions Data frame
+promotiondf<-hrm %>% group_by(sales,promotion_last_5years) %>%
+  summarise(Count = n())
+
+#Sprading the data'
+promotiondf<-promotiondf %>% spread(promotion_last_5years,Count)
+
+#changing the names
+names(promotiondf)<-c("Department","No Promotion","Promotion")
+
+#replacing NA valuw with 0
+promotiondf[is.na(promotiondf)]<-0
+
+
+
+
+
+
+
+
 
 
 
