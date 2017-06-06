@@ -69,6 +69,30 @@ cor.test(accuracy$Actual,accuracy$Predicted)
 
 
 
+#Using K-NN to predict the Satisfaction Level
+
+#Requiring the package which has K-NN regression
+require(FNN)
+?knn.reg
+
+modKnn<-knn.reg(select(train,average_montly_hours,time_spend_company,number_project
+                       ),select(testdf,average_montly_hours,time_spend_company,number_project
+                                ),train[,1],k=10,algorithm=c("kd_tree"))
+
+summary(modKnn)
 
 
+
+#Without the Test SET - It performs the Leave One Out Cross validation
+modKnn1<-knn.reg(select(train,average_montly_hours,time_spend_company,number_project,left),test = NULL,
+train[,1],k=10,algorithm=c("kd_tree"))
+
+#The residuals value
+modKnn1$residuals
+
+#The Deviance value i.e RSS(Residual Sum of Squares)
+modKnn1$PRESS
+
+#R squared value which explains the amount of variance explained
+modKnn1$R2Pred
 
