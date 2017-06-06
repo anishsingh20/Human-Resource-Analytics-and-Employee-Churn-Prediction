@@ -1,3 +1,20 @@
+---
+title: "Predictive Modelling"
+author: "Anish Singh Walia"
+date: "June 6, 2017"
+output: html_document
+---
+# Predictive Analytics on the Human resource Dataset
+
+
+## 1)Predicting the Satisfaction Level
+
+```{r,message=FALSE,warning=FALSE}
+require(ggplot2)
+require(dplyr)
+
+hrm<-read.csv('HR_comma_sep.csv')
+
 attach(hrm)
 
 #Doing Predictive Analysitcs on the Dataset
@@ -71,4 +88,7 @@ cor.test(accuracy$Actual,accuracy$Predicted)
 
 
 
+
+
+```
 
