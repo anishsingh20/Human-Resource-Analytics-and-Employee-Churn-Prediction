@@ -88,6 +88,81 @@ cor.test(accuracy$Actual,accuracy$Predicted)
 
 
 
+#Using K-NN to predict the Satisfaction Level
+
+#Requiring the package which has K-NN regression
+require(FNN)
+?knn.reg
+
+modKnn<-knn.reg(select(train,average_montly_hours,time_spend_company,number_project,left
+                       ),select(testdf,average_montly_hours,time_spend_company,number_project,left
+                                ),train[,1],k=10,algorithm=c("kd_tree"))
+
+#Predictions Data frame with Actual Target values and Predicted Target values
+# for Test Data set
+preddf<-data.frame(Actual =testdf$satisfaction_level,
+                   Predicted = modKnn$pred)
+
+preddf<-preddf %>% mutate(Residuals=abs(Actual-Predicted))
+
+#Redisudals Distribution
+summary(preddf$Residuals)
+
+filter(preddf,Residuals==0)
+#17 observations with exact prediction i.e Residual value=0
+
+ggplot(aes(x = Residuals ),data  = preddf)  + 
+  geom_histogram(color='black',fill='green',bins=40,binwidth = 0.01) + 
+  scale_x_continuous(breaks=seq(0,0.7,0.05)) + 
+  labs(x = "Residual Values i.e (Actual Target - Predicted Target)",y = "Counts",
+       title = "Plot of Residuals Values for K-NN with 10 as K") + 
+  coord_cartesian(ylim=c(0,400)) + 
+  scale_y_continuous(breaks = seq(0,400,50))
+
+#Mean squared Error value for K-NN model
+
+RSS<-sum(preddf$Residual**2) #Residuam Sum of Squares-deviance value
+MSEknn<-(RSS/nrow(preddf)) # Mean Squared Error
+MSEknn
+#Standardized Errors
+StandardError<-sqrt(MSEknn)
+StandardError
+#Standard error of 20%
+#lesser Error then Linear Regression Model
+#Hence K-NN gave better results on the Test Set
+#Prediction Accuracy = 7%
+
+
+
+
+
+#Without the Test SET - It performs the Leave One Out Cross validation
+modKnn1<-knn.reg(select(train,average_montly_hours,time_spend_company,number_project,left),test = NULL,
+train[,1],k=10)
+
+#The residuals value
+modKnn1$residuals
+summary(modKnn1$residuals)
+
+
+
+
+#The Deviance value i.e RSS(Residual Sum of Squares)
+modKnn1$PRESS
+
+#R squared value which explains the amount of variance explained
+modKnn1$R2Pred
+
+
+
+
+
+
+
+
+
+
+
 
 
 ```
