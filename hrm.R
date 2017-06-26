@@ -436,6 +436,8 @@ ggplot(aes(x =Department, y =PerNopromotion ),data = promotiondf) +
   coord_flip()
 #No promotion in IT and Product Management Dept
 
+
+
   
 
 
