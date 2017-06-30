@@ -57,4 +57,19 @@ model %>% layer_dense(units = 12 , activation = 'relu' , input_shape=c(9))  %>%
   
 #To check the architecture of the MLP model
 summary(model)
+get_layer(model,index=3)# to get the layers used
+get_config(model) # to check the configuration
+model$layers
+model$input_layers
+model$output # to list the output tensors
+
+
+#Compiling and fitting the model
+
+model %>% compile(loss = "binary_crossentropy",
+                  optimizer="adam",
+                  metrics="accuracy")
+  
+  
+
 
