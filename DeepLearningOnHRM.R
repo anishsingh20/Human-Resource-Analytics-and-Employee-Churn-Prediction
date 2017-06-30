@@ -6,15 +6,6 @@ require(tensorflow)
 
 
 #Generating Training and Test Data
-
-#Converting the Data to a Matrix becasue to use Keras the data should be in form of
-#array or matrix
-
-hrm<-as.matrix(hrm)
-
-#Setting the Column names to NULL
-dimnames(hrm)<-NULL
-
 summary(hrm)
 
 
@@ -29,12 +20,21 @@ hrmnew<- sample(2, nrow(hrm), replace=TRUE, prob=c(0.67, 0.33))
 
 #Training Data
 #Saperating Inputs and Target Variables
-hrm.train<-hrm[hrmnew==1,1:9]
-hrm.trainTarget<-hrm[hrmnew==1,10]
+hrm.train<-hrm[hrmnew==1,1:5]
+hrm.trainTarget<-hrm[hrmnew==1,7]
+#Converting the input Data to a Matrix becasue to use Keras the data should be in form of
+#array or matrix
+
+hrm.train<-as.matrix(hrm.train)
+
 
 #Test Data- Inputs and Output Saperated
-hrm.test<-hrm[hrmnew==2,1:9]
-hrm.testTarget<-hrm[hrmnew==2,10]
+hrm.test<-hrm[hrmnew==2,1:5]
+#Converting the Data to a Matrix becasue to use Keras the data should be in form of
+#array or matrix
+hrm.test<-as.matrix(hrm.test)
+
+hrm.testTarget<-hrm[hrmnew==2,7]
 
 
 #converting Targets to one-hot encoding 
@@ -49,7 +49,8 @@ model<-keras_model_sequential()
 #Defining the architecture of a simple Multi Layer Perceptron Model
 
 #input shape for defining the dimentions of the Training Data with inputs = No of columns
-model %>% layer_dense(units = 12 , activation = 'relu' , input_shape=c(9))  %>%
+model %>% layer_dense(units = 32 , activation = 'relu' , input_shape=c(5))  %>%
+          layer_dense(units=10 , activation="relu") %>%
         
         #output layer with 2 columns with prob for each class 
         #softmax for computing class probabilities
@@ -69,7 +70,18 @@ model$output # to list the output tensors
 model %>% compile(loss = "binary_crossentropy",
                   optimizer="adam",
                   metrics="accuracy")
+
+#fitting the Model
+
+history<-model %>% fit(
+              hrm.train,hrm.trainTarget,epochs=500,
+              batch_size= 32 , verbose = 2,
+              callbacks = callback_tensorboard(log_dir = "logs/run_a"),
+              validation_split=0.2)
   
   
+#Visualizing the Model's metrics
+
+plot(history$metrics$loss)
 
 
