@@ -82,6 +82,16 @@ history<-model %>% fit(
   
 #Visualizing the Model's metrics
 
-plot(history$metrics$loss)
+plot(history$metrics$loss,type="l",col="red",xlab="Epochs",ylab="Error")
+lines(history$metrics$val_loss , type="l",col="purple")
+legend("topright",c("Train","Test"),lty=c(1,1),col=c("red","purple"))
 
+#Plotting Accuracy
+plot(history$metrics$acc,type="l",col="blue",xlab="Epochs",ylab="Accuracy")
+lines(history$metrics$val_acc,type="l",col="green")
+legend("bottomright",c("train","Test"),col=c("blue","green"),lty=c(1,1))
 
+#Evaluating on Test Data
+score<-model %>% evaluate(hrm.test ,hrm.testTarget , batch_size = 128,verbose=1)
+
+print(score) #An accuracy of 95 % on Test data with Loss of 14%
