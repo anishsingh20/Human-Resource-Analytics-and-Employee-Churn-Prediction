@@ -80,6 +80,8 @@ history<-model %>% fit(
               validation_split=0.2)
   
   
+tensorboard() #for visualizing the Model's Metrics
+
 #Visualizing the Model's metrics
 
 plot(history$metrics$loss,type="l",col="red",xlab="Epochs",ylab="Error")
@@ -95,3 +97,7 @@ legend("bottomright",c("train","Test"),col=c("blue","green"),lty=c(1,1))
 score<-model %>% evaluate(hrm.test ,hrm.testTarget , batch_size = 128,verbose=1)
 
 print(score) #An accuracy of 95 % on Test data with Loss of 14%
+
+#saving the Model
+save_model_hdf5(model, "model1.h5")
+
