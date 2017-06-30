@@ -136,3 +136,10 @@ modKnn1$PRESS
 #R squared value which explains the amount of variance explained
 modKnn1$R2Pred
 
+
+
+
+
+
+
+
