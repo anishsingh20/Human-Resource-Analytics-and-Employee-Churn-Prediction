@@ -43,3 +43,18 @@ hrm.testTarget<- to_categorical(hrm.testTarget)
 
 #Initializing a Empty Sequential Model
 model<-keras_model_sequential()
+
+#Now we are trying to predict whether a Employee is going to Leave his Job or not
+
+#Defining the architecture of a simple Multi Layer Perceptron Model
+
+#input shape for defining the dimentions of the Training Data with inputs = No of columns
+model %>% layer_dense(units = 12 , activation = 'relu' , input_shape=c(9))  %>%
+        
+        #output layer with 2 columns with prob for each class 
+        #softmax for computing class probabilities
+         layer_dense(units = 2 ,activation="softmax")
+  
+#To check the architecture of the MLP model
+summary(model)
+
