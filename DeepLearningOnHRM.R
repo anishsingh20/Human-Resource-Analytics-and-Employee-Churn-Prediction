@@ -23,7 +23,6 @@ summary(hrm)
 set.seed(122)
 
 #Generating Random Samples of data to create Training and Test Set
-
 hrmnew<- sample(2, nrow(hrm), replace=TRUE, prob=c(0.67, 0.33))
 
 #Splitting the data
@@ -42,4 +41,5 @@ hrm.testTarget<-hrm[hrmnew==2,10]
 hrm.trainTarget<-to_categorical(hrm.trainTarget)
 hrm.testTarget<- to_categorical(hrm.testTarget)
 
-
+#Initializing a Empty Sequential Model
+model<-keras_model_sequential()
