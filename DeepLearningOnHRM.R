@@ -13,8 +13,12 @@ summary(hrm)
 
 set.seed(122)
 
-#Generating Random Samples of data to create Training and Test Set
+#Generating Random Samples of data to create Training and Test Set-
+#no-1 would be having prportion of 67% and 2 will be having around 33%
 hrmnew<- sample(2, nrow(hrm), replace=TRUE, prob=c(0.67, 0.33))
+
+#checking the distribution of random numbers
+table(hrmnew)
 
 #Splitting the data
 
@@ -101,3 +105,4 @@ print(score) #An accuracy of 95 % on Test data with Loss of 14%
 #saving the Model
 save_model_hdf5(model, "model1.h5")
 
+model<-load_model_hdf5('model1.h5')
