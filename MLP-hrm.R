@@ -108,8 +108,32 @@ save_model_hdf5(model, "model1.h5")
 model<-load_model_hdf5('model1.h5')
 
 
+
+#----------------------------------------------
+
+
 #Generating sample Training labels
 trainY1<-sample(c(1,0),9980,replace = T,prob=c(0.55,0.45))
 trainY2<-sample(c(0,1),9980,replace = T,prob=c(0.55,.45))
 
 sample.trainTarget<-cbind(trainY1,trainY2)
+
+
+model2<-keras_model_sequential()
+
+model2 %>% layer_dense(units = 12 , activation = 'relu' , input_shape=c(5))  %>%
+  layer_dense(units=10 , activation="relu") %>%
+  
+  #output layer with 2 columns with prob for each class 
+  #softmax for computing class probabilities
+  layer_dense(units = 2 ,activation="softmax")
+
+summary(model2)
+
+#compiling the MLP model -using Stochastic gradient descent as optimization strategy
+model2 %>% compile(loss="binary_crossentropy",optimizer="sgd",
+                   metrics="accuracy")
+
+
+
+
