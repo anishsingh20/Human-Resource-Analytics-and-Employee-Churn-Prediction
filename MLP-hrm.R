@@ -106,3 +106,8 @@ print(score) #An accuracy of 95 % on Test data with Loss of 14%
 save_model_hdf5(model, "model1.h5")
 
 model<-load_model_hdf5('model1.h5')
+
+
+#Generating sample Test data
+testY1<-sample(c(1,0),5019,replace = T,prob=c(0.59,0.41))
+testY2<-sample(c(0,1),5019,replace = T,prob=c(0.60,.40))
