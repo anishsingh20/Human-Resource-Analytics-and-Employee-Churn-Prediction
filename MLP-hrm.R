@@ -113,15 +113,15 @@ model<-load_model_hdf5('model1.h5')
 
 
 #Generating sample Training labels
-trainY1<-sample(c(1,0),9980,replace = T,prob=c(0.55,0.45))
-trainY2<-sample(c(0,1),9980,replace = T,prob=c(0.55,.45))
+trainY1<-sample(c(1,0),9980,replace = T,prob=c(0.60,0.40))
+trainY2<-sample(c(0,1),9980,replace = T,prob=c(0.60,.40))
 
 sample.trainTarget<-cbind(trainY1,trainY2)
 
 
 model2<-keras_model_sequential()
 
-model2 %>% layer_dense(units = 12 , activation = 'relu' , input_shape=c(5))  %>%
+model2 %>% layer_dense(units = 28 , activation = 'relu' , input_shape=c(5))  %>%
   layer_dense(units=10 , activation="relu") %>%
   
   #output layer with 2 columns with prob for each class 
@@ -131,9 +131,22 @@ model2 %>% layer_dense(units = 12 , activation = 'relu' , input_shape=c(5))  %>%
 summary(model2)
 
 #compiling the MLP model -using Stochastic gradient descent as optimization strategy
-model2 %>% compile(loss="binary_crossentropy",optimizer="sgd",
+model2 %>% compile(loss="binary_crossentropy",optimizer="adam",
                    metrics="accuracy")
 
 
+history2<- model2 %>% fit(hrm.train,sample.trainTarget,epochs=500,
+                          batch_size= 32 , verbose = 1,
+                          callbacks = callback_tensorboard(log_dir = "logs/run_d"),
+                          validation_split=0.2)
+tensorboard()
+
+#generating random Test Target data
+score<-model2 %>% evaluate(hrm.test ,hrm.testTarget , batch_size = 128,verbose=1)
+sample_test1<-sample(c(0,1),nrow(hrm.testTarget),replace = T,prob=c(0.60,0.40))
+sample_test2<-sample(c(1,0),nrow(hrm.testTarget),replace = T,prob=c(0.60,0.40))
+sample_randtest<-cbind(sample_test2,sample_test1)
+score2<-model2 %>% evaluate(hrm.test ,sample_randtest , batch_size = 128,verbose=1)
+#[1] 6.371643 -loss and 60% accuracy
 
 
