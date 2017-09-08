@@ -5,8 +5,13 @@ require(keras)
 require(tensorflow)
 
 
+#PHASE1-------------------------------DATA PRE-PROCESSING-------------------------------------
+
 #Generating Training and Test Data
 summary(hrm)
+
+#Data preprocessing needed to make the data suitable ,clean,transform,nromalize it so as to
+#feed it to the Model and get accurate results
 
 
 #setting seed for reproducable results
@@ -26,9 +31,9 @@ table(hrmnew)
 #Saperating Inputs and Target Variables
 hrm.train<-hrm[hrmnew==1,1:5]
 hrm.trainTarget<-hrm[hrmnew==1,7]
+
 #Converting the input Data to a Matrix becasue to use Keras the data should be in form of
 #array or matrix
-
 hrm.train<-as.matrix(hrm.train)
 
 
@@ -44,6 +49,33 @@ hrm.testTarget<-hrm[hrmnew==2,7]
 #converting Targets to one-hot encoding 
 hrm.trainTarget<-to_categorical(hrm.trainTarget)
 hrm.testTarget<- to_categorical(hrm.testTarget)
+
+
+
+
+#normalizing the variables
+
+#making a function which takes a vector x and uses max-min normalization to normalize it
+#to a range-0 to 1
+normal<-function(x)
+{
+  norm_x<-(x-min(x))/(max(x)-min(x))
+  norm_x
+}
+
+hrm.train[,3:5]<-normal(hrm.train[,3:5])
+
+
+
+
+
+
+
+
+
+
+
+#_-------------------------------------------------------------------------------------------
 
 #Initializing a Empty Sequential Model
 model<-keras_model_sequential()
@@ -153,5 +185,34 @@ score2<-model2 %>% evaluate(hrm.test ,sample_randtest , batch_size = 128,verbose
 
 #saving the second model
 save_model_hdf5(model2,"model2.h5")
+plot(history2)
+
+
+#----------------------------------
+
+#Trial 3
+
+model3<-keras_model_sequential()
+
+
+model3 %>% layer_dense(units = 25 , activation = 'relu' , input_shape=c(5))  %>%
+  layer_dense(units=12 , activation="relu") %>%
+  
+  #output layer with 2 columns with prob for each class 
+  #softmax for computing class probabilities
+  layer_dense(units = 2 ,activation="softmax")
+
+summary(model3)
+
+#compiling the MLP model -using Stochastic gradient descent as optimization strategy
+model3 %>% compile(loss="binary_crossentropy",optimizer="rmsprop",
+                   metrics="accuracy")
+
+
+history3<- model3 %>% fit(hrm.train,hrm.trainTarget,epochs=350,
+                          batch_size= 32 , verbose = 2,
+                          callbacks = callback_tensorboard(log_dir = "logs/run_f"),
+                          validation_split=0.1)
+
 
 
