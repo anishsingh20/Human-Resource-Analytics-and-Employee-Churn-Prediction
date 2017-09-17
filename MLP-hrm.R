@@ -44,6 +44,8 @@ hrm.test<-hrm[hrmnew==2,1:5]
 hrm.test<-as.matrix(hrm.test)
 
 hrm.testTarget<-hrm[hrmnew==2,7]
+#generating a target vector for test set to generate a confusion matrix for classifier
+hrm.testTarget.vector<-hrm.testTarget<-hrm[hrmnew==2,7]
 
 
 #converting Targets to one-hot encoding 
@@ -129,8 +131,20 @@ plot(history$metrics$acc,type="l",col="blue",xlab="Epochs",ylab="Accuracy")
 lines(history$metrics$val_acc,type="l",col="green")
 legend("bottomright",c("train","Test"),col=c("blue","green"),lty=c(1,1))
 
+#Predicting on Test set
+
+predict_class<-predict_classes(model, hrm.test , batch_size = 32, verbose = 1)
+
+#confusion matrix to test MLP classifier's accuracy
+table(pred=predict_class,actual=hrm.testTarget.vector)
+#calculating the misclassification rate
+mean(predict_class!=hrm.testTarget.vector)*100
+#misclassification rate of 4% on test set
+
 #Evaluating on Test Data
 score<-model %>% evaluate(hrm.test ,hrm.testTarget , batch_size = 128,verbose=1)
+
+
 
 print(score) #An accuracy of 95 % on Test data with Loss of 14%
 
