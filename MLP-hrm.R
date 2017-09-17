@@ -135,8 +135,14 @@ legend("bottomright",c("train","Test"),col=c("blue","green"),lty=c(1,1))
 
 predict_class<-predict_classes(model, hrm.test , batch_size = 32, verbose = 1)
 
+
+
 #confusion matrix to test MLP classifier's accuracy
 table(pred=predict_class,actual=hrm.testTarget.vector)
+
+#confusion data frame
+classdf<-data.frame(table(pred=predict_class,actual=hrm.testTarget.vector))
+
 #calculating the misclassification rate
 mean(predict_class!=hrm.testTarget.vector)*100
 #misclassification rate of 4% on test set
