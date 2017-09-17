@@ -69,6 +69,26 @@ history<-model %>% fit(
 
 
 shinyServer(function(input, output) {
+  
+  observeEvent(input$btn, {
+    cat("\nEntered Inputs are:", input$satisfaction,"\n",input$evaluation,"\n",input$project,
+        "\n",input$worked,"\n",input$time)
+  })
+  
+  
+  #take action whenever button is pressed
+  class<-eventReactive(input$btn,{
+    #taking the user's input data and converting it to a matrix to predict the class label
+    inputdata<-matrix(data=c(input$satisfaction,input$evaluation,input$project,
+                             input$worked,input$time),nrow=1,ncol=5)
+    
+    
+    
+    
+    
+    
+  })
+  
    
 
   

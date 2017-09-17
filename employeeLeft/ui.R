@@ -33,7 +33,10 @@ shinyUI(fluidPage(
                     "Enter the number of Average hours worked-(100 to 300)",value=150) ,
        br(),
        numericInput("time",
-                    "Enter the time spend at company in years-(1 to 10)",value=3)
+                    "Enter the time spend at company in years-(1 to 10)",value=3) ,
+       br(),
+       
+       actionButton("btn","Submit")
        
     ),
     
