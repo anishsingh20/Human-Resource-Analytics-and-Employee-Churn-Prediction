@@ -1,4 +1,5 @@
 library(shiny)
+require(keras)
 
 
 
@@ -64,31 +65,43 @@ model %>% compile(loss = "binary_crossentropy",
 history<-model %>% fit(
   hrm.train,hrm.trainTarget,epochs=500,
   batch_size= 32 , verbose = 2,
-  callbacks = callback_tensorboard(log_dir = "logs/run_a"),
   validation_split=0.2)
 
 
 shinyServer(function(input, output) {
   
   observeEvent(input$btn, {
-    cat("\nEntered Inputs are:", input$satisfaction,"\n",input$evaluation,"\n",input$project,
+    cat("\nEntered Inputs are:",input$satisfaction,"\n",input$evaluation,"\n",input$project,
         "\n",input$worked,"\n",input$time)
   })
   
   
   #take action whenever button is pressed
-  class<-eventReactive(input$btn,{
+  output_class<-eventReactive(input$btn,{
     #taking the user's input data and converting it to a matrix to predict the class label
     inputdata<-matrix(data=c(input$satisfaction,input$evaluation,input$project,
                              input$worked,input$time),nrow=1,ncol=5)
     
+    #predicted class
+    pred.class<-predict_classes(model,inputdata,batch_size=32,verbose=0)
+    
+    class<-ifelse(pred.class==1,"Employee is likely to leave","Employee is not likely to leave")
+    class
     
     
     
-    
-    
-  })
+})
   
+  
+output$class<-renderText({
+  
+  if(is.null(input$evaluation) ) return()
+  
+  #predicting the output class
+  output_class()
+  
+  
+})  
    
 
   
