@@ -136,8 +136,7 @@ legend("bottomright",c("train","Test"),col=c("blue","green"),lty=c(1,1))
 
 predict_class<-predict_classes(model, hrm.test , batch_size = 32, verbose = 1)
 
-test<-matrix(data=c(0.40,0.51,2,145,3),nrow=1,ncol=5)
-
+test<-matrix(data=c(0.75,0.64,6,99,5),nrow=1,ncol=5)
 
 predict_classes(model, test , batch_size = 32, verbose = 1)
 
