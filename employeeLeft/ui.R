@@ -20,20 +20,20 @@ shinyUI(fluidPage(
   sidebarLayout(
     
     sidebarPanel(
-       numericInput("satisfaction",
-                   "Enter the satisfaction level-(0 to 1)",value=0.25) ,
+       sliderInput("satisfaction",
+                   "Enter the satisfaction level:(0 to 1)",value=0.25,min=0,max=1,step=0.01) ,
        br(),
-       numericInput("evaluation",
-                    "Enter the last evaluation (0 to 1)",value=0.50),
+       sliderInput("evaluation",
+                    "Enter the last evaluation:(0 to 1)",value=0.50,min=0,max=1,step=0.01),
        br(),
-       numericInput("project",
-                    "Enter the number of projects-(1 to 10)",value=4),
+       sliderInput("project",
+                    "Enter the number of projects done by employee:(1 to 10)",value=4,min=1,max=10,step=1),
        br(),
        numericInput("worked",
-                    "Enter the number of Average hours worked-(100 to 300)",value=150) ,
+                    "Enter the number of Average hours worked:(100 to 300)",value=150) ,
        br(),
        numericInput("time",
-                    "Enter the time spend at company in years-(1 to 10)",value=3) ,
+                    "Enter the time spend at company in years:(1 to 10)",value=3) ,
        br(),
        
        actionButton("btn","Submit")
@@ -42,7 +42,9 @@ shinyUI(fluidPage(
     
     # Show a plot of the generated distribution
     mainPanel(
-      textOutput("class")
+      h3("The predicted class label is"),
+      hr(),
+      h3(textOutput("class"))
     )
   )    
 ))
