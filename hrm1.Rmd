@@ -590,7 +590,15 @@ hchart(salesDept,"line",hcaes(x=sales,y=mean_satisfactionlevel),color="red")
 
 
 
+------------------
 
+### Making a correlation matrix
+
+
+```{r}
+hchart(cor(hrm[,1:5]))
+
+```
 
 
 
