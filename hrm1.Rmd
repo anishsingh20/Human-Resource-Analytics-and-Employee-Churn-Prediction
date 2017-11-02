@@ -573,3 +573,4 @@ ggplot(aes(x=sales,y=satisfaction_level),data=hrm) +
 
 ```
 
+__*Highest median satisfaction level for IT department employees*__.
