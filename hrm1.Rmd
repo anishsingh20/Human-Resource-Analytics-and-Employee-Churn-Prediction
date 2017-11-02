@@ -581,5 +581,32 @@ salesDept<-hrm %>%
           summarize(mean_satisfactionlevel=mean(satisfaction_level)) %>%
           arrange(desc(mean_satisfactionlevel))
 
+hchart(salesDept,"line",hcaes(x=sales,y=mean_satisfactionlevel),color="red")
+
+
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
