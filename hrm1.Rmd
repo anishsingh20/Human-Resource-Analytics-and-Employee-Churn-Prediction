@@ -557,3 +557,19 @@ ggplot(aes(x =Department, y =PerNopromotion ),data = promotiondf) +
 
 ```
 
+
+-----------------
+
+
+### Summarizing the satisfaction level of employees for each department
+
+```{r}
+
+by(hrm$satisfaction_level,hrm$sales,summary)
+
+ggplot(aes(x=sales,y=satisfaction_level),data=hrm) +
+  geom_boxplot() +
+  coord_flip()
+
+```
+

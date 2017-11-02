@@ -148,7 +148,7 @@ table(pred=predict_class,actual=hrm.testTarget.vector)
 classdf<-data.frame(table(pred=predict_class,actual=hrm.testTarget.vector))
 
 #calculating the misclassification rate
-mean(predict_class!=hrm.testTarget.vector)*100
+mean(predict_class!=hrm.testTarget.vector)
 #misclassification rate of 4% on test set
 
 #Evaluating on Test Data
@@ -209,6 +209,9 @@ score2<-model2 %>% evaluate(hrm.test ,sample_randtest , batch_size = 128,verbose
 
 #saving the second model
 save_model_hdf5(model2,"model2.h5")
+
+model2<-load_model_hdf5("model2.h5")
+
 plot(history2)
 
 
