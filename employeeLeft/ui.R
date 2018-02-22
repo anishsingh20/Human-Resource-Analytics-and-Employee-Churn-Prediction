@@ -1,13 +1,7 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-# 
-#    http://shiny.rstudio.com/
-#
 
 library(shiny)
+require(tensorflow)
+library(keras)
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -44,7 +38,7 @@ shinyUI(fluidPage(
     mainPanel(
       h3("The predicted class label is"),
       hr(),
-      h3(textOutput("class"))
+      h3(textOutput("class"),style="color:blue")
     )
   )    
 ))

@@ -1,5 +1,6 @@
 library(shiny)
-require(keras)
+library(keras)
+require(tensorflow)
 
 
 #loading the saved keras model
@@ -12,6 +13,8 @@ shinyServer(function(input, output) {
         "\n",input$worked,"\n",input$time,"\n")
     
     print(output_class())
+    
+    
   })
   
   
@@ -23,10 +26,9 @@ shinyServer(function(input, output) {
     
     #predicted class
     pred.class<-predict_classes(model,inputdata,batch_size=32,verbose=0)
-    
     class<-ifelse(pred.class==1,"Employee is likely to leave","Employee is not likely to leave")
+    #will return the class label
     class
-    
     
     
 })
@@ -35,6 +37,8 @@ shinyServer(function(input, output) {
 output$class<-renderText({
   
   #predicting the output class
+  #calling the above function which is called when we click the submit button, which returns the 
+  #predicted class label
   output_class()
   
   
