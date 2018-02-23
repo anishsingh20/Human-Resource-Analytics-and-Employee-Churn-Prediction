@@ -10,6 +10,9 @@ require(tensorflow)
 #Generating Training and Test Data
 summary(hrm)
 
+
+
+
 #Data preprocessing needed to make the data suitable ,clean,transform,nromalize it so as to
 #feed it to the Model and get accurate results
 
@@ -17,6 +20,14 @@ summary(hrm)
 #setting seed for reproducable results
 
 set.seed(122)
+
+#employee ID variable, creating IDs for the each employee 
+hrm$EmpId<-0
+
+#random sampling
+hrm$Empid = sample(x=1:nrow(hrm),size=nrow(hrm))
+
+
 
 #Generating Random Samples of data to create Training and Test Set-
 #no-1 would be having prportion of 67% and 2 will be having around 33%
