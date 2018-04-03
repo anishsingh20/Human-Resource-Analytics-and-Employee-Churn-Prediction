@@ -1,7 +1,17 @@
-
 library(shiny)
 require(tensorflow)
 library(keras)
+require(dplyr)
+
+
+
+hrm<-read.csv('../Dataset/HR_comma_sep.csv')
+
+hrm$Empid<-0
+
+#random sampling
+hrm$Empid = sample(x=1:nrow(hrm),size=nrow(hrm))
+
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -38,6 +48,7 @@ shinyUI(fluidPage(
     mainPanel(
       h3("The predicted class label is"),
       hr(),
+      
       h3(textOutput("class"),style="color:blue")
     )
   )    

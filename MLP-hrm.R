@@ -3,12 +3,14 @@
 attach(hrm)
 require(keras)
 require(tensorflow)
-
+require(dplyr)
 
 #PHASE1-------------------------------DATA PRE-PROCESSING-------------------------------------
 
 #Generating Training and Test Data
+hrm<-read.csv('Dataset/HR_comma_sep.csv')
 summary(hrm)
+
 
 
 
@@ -22,12 +24,13 @@ summary(hrm)
 set.seed(122)
 
 #employee ID variable, creating IDs for the each employee 
-hrm$EmpId<-0
+hrm$Empid<-0
 
 #random sampling
 hrm$Empid = sample(x=1:nrow(hrm),size=nrow(hrm))
 
-
+#writing the new data set with EMPLOYEEIDs
+write.csv(hrm,"hrm_new.csv")
 
 #Generating Random Samples of data to create Training and Test Set-
 #no-1 would be having prportion of 67% and 2 will be having around 33%

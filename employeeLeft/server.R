@@ -1,6 +1,18 @@
 library(shiny)
 library(keras)
 require(tensorflow)
+require(dplyr)
+
+
+
+
+hrm<-read.csv('../Dataset/HR_comma_sep.csv')
+
+hrm$Empid<-0
+
+#random sampling
+hrm$Empid = sample(x=1:nrow(hrm),size=nrow(hrm))
+
 
 
 #loading the saved keras model
@@ -24,6 +36,8 @@ shinyServer(function(input, output) {
     inputdata<-matrix(data=c(input$satisfaction,input$evaluation,input$project,
                              input$worked,input$time),nrow=1,ncol=5)
     
+    
+    
     #predicted class
     pred.class<-predict_classes(model,inputdata,batch_size=32,verbose=0)
     class<-ifelse(pred.class==1,"Employee is likely to leave","Employee is not likely to leave")
@@ -43,7 +57,6 @@ output$class<-renderText({
   
   
 })  
-   
 
   
 })
