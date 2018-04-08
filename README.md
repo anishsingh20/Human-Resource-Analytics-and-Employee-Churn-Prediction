@@ -1,6 +1,9 @@
 # Human-Resource-Analytics
-A Data science project with the main aim of doing some Descriptive and Exploratory Data Analysis and then applying predictive modelling for predicting why experienced employees leaving prematurely?
-Project Document Link - http://rpubs.com/anish20/humanResourceAnalytics
+A Data science project with the main aim of doing some Descriptive and Exploratory Data Analysis and then applying predictive modelling for predicting why experienced employees leaving prematurely?. USe deep multi-layer preceptron model to predict which employee will leave the company.
+
+
+### Link to the report of Exploratory data analysis-
+ 1) http://rpubs.com/anish20/humanResourceAnalytics
 
 
 
