@@ -1,7 +1,7 @@
 # Human-Resource-Analytics
 A Data science project with the main aim of doing some Descriptive and Exploratory Data Analysis and then applying predictive modelling for predicting why experienced employees leaving prematurely?. Used deep multi-layer preceptron model to predict which employee will leave the company.
 
-I have used Keras and Tensorflow to generate a Deep Multi-layered Perceptron classifier. 
+I have used Keras and Tensorflow in R to generate a Deep Multi-layered Perceptron classifier. Also after that I have generated an web application and deployed the keras classifer to predict whether a employee will leave the company or not using some features. The app is not yet deployed but it's been made using Shiny . 
 
 
 ### Link to the report of Exploratory data analysis-
